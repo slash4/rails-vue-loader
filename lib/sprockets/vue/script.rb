@@ -12,7 +12,7 @@ module Sprockets::Vue
           CoffeeScript.compile(s, sourceMap: true, sourceFiles: [input[:source_path]], no_wrap: true)
         },
         'es6' => ->(s, input){
-          Babel::Transpiler.transform(data, {}) #TODO
+          Babel::Transpiler.transform(s, {}) #TODO
         },
         nil => ->(s,input){ { 'js' => s } }
       }
@@ -26,7 +26,7 @@ module Sprockets::Vue
           map = nil
           if script
             result = SCRIPT_COMPILES[script[:lang]].call(script[:content], input)
-            
+
             map = result['sourceMap']
 
             output << "'object' != typeof VComponents && (this.VComponents = {});
