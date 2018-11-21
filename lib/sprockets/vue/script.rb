@@ -12,7 +12,8 @@ module Sprockets::Vue
           CoffeeScript.compile(s, sourceMap: true, sourceFiles: [input[:source_path]], no_wrap: true)
         },
         'es6' => ->(s, input){
-          Babel::Transpiler.transform(s, {}) #TODO
+          #Babel::Transpiler.transform(s, {}) #TODO
+          Sprockets::ES6.new.transform(s, {})
         },
         nil => ->(s,input){ { 'js' => s } }
       }
