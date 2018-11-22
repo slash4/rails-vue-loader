@@ -13,7 +13,11 @@ module Sprockets::Vue
         },
         'es6' => ->(s, input){
           #Babel::Transpiler.transform(s, {}) #TODO
-          { 'js' => Sprockets::ES6.new.transform(s, {'modules' => 'amd', 'moduleIds' => true})["code"] }
+          res = Sprockets::ES6.new.transform(s, {'modules' => 'amd', 'moduleIds' => true})
+          {
+            'js' =>  res['code'].gsub("define('unknown', ['exports', 'module'], function (exports, module) {","")[0..-5],
+            'sourceMap' => res['map']
+          }
         },
         nil => ->(s,input){ { 'js' => s } }
       }
@@ -30,9 +34,15 @@ module Sprockets::Vue
 
             map = result['sourceMap']
 
-            output << "'object' != typeof VComponents && (this.VComponents = {});
-              var module = { exports: null };
-              #{result['js']}; VComponents['#{name}'] = module.exports;"
+            if script[:lang] != 'es6'
+              output << "'object' != typeof VComponents && (this.VComponents = {});
+                var module = { exports: null };
+                #{result['js']}; VComponents['#{name}'] = module.exports;"
+            else
+              output << "'object' != typeof VComponents && (this.VComponents = {});
+                var module = { exports: null };
+                #{result['js']}; VComponents['#{name}'] = require(['test'], function(bla){ bla.test()});"
+            end
           end
 
           if template
