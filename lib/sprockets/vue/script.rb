@@ -13,7 +13,7 @@ module Sprockets::Vue
         },
         'es6' => ->(s, input){
           #Babel::Transpiler.transform(s, {}) #TODO
-          { 'js' => Sprockets::ES6.new.transform(s, {})["code"] }
+          { 'js' => Sprockets::ES6.new.transform(s, {'modules' => 'amd', 'moduleIds' => true})["code"] }
         },
         nil => ->(s,input){ { 'js' => s } }
       }
