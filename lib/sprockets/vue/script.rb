@@ -34,15 +34,11 @@ module Sprockets::Vue
 
             map = result['sourceMap']
 
-            if script[:lang] != 'es6'
-              output << "'object' != typeof VComponents && (this.VComponents = {});
-                var module = { exports: null };
-                #{result['js']}; VComponents['#{name}'] = module.exports;"
-            else
-              output << "'object' != typeof VComponents && (this.VComponents = {});
-                var module = { exports: null };
-                #{result['js']}; VComponents['#{name}'] = require(['test'], function(bla){ bla.test()});"
-            end
+
+            output << "'object' != typeof VComponents && (this.VComponents = {});
+              var module = { exports: null };
+              #{result['js']}; VComponents['#{name}'] = module.exports;"
+
           end
 
           if template
