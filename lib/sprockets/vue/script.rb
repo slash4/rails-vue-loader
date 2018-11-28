@@ -15,7 +15,7 @@ module Sprockets::Vue
           #Babel::Transpiler.transform(s, {}) #TODO
           res = Sprockets::ES6.new.transform(s, {'modules' => 'amd', 'moduleIds' => true})
           {
-            'js' =>  res['code'].gsub("define('unknown', ['exports', 'module'], function (exports, module) {","")[0..-5],
+            'js' =>  res['code'].gsub('define("unknown", ["exports", "module"], function (exports, module) {',"").gsub("define('unknown', ['exports', 'module'], function (exports, module) {","")[0..-5],
             'sourceMap' => res['map']
           }
         },
