@@ -45,6 +45,8 @@ module Sprockets::Vue
             template_input = {}
             template_input[:data] = template[:content]
             template_input[:environment] = input[:environment]
+            template_input[:file_name] = File.dirname(FILE)
+
             erb_parsed = Sprockets::ERBProcessor.call(template_input)
             output << "VComponents['#{name.sub(/\.tpl$/, "")}'].template = '#{j erb_parsed}';"
           end
