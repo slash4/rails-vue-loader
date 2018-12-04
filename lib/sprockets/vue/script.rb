@@ -42,7 +42,8 @@ module Sprockets::Vue
           end
 
           if template
-            output << "VComponents['#{name.sub(/\.tpl$/, "")}'].template = '#{j template[:content]}';"
+            erb_parsed = Sprockets::ERBProcessor.call(template[:content])
+            output << "VComponents['#{name.sub(/\.tpl$/, "")}'].template = '#{j erb_parsed}';"
           end
 
           { data: "#{warp(output.join)}", map: map }
