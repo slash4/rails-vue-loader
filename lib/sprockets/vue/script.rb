@@ -42,13 +42,13 @@ module Sprockets::Vue
           end
 
           if template
-            template_input = {}
-            template_input[:data] = template[:content]
-            template_input[:environment] = input[:environment]
-            template_input[:filename] = File.dirname(__FILE__)
+            #template_input = {}
+            #template_input[:data] = template[:content]
+            #template_input[:environment] = input[:environment]
+            #template_input[:filename] = File.dirname(__FILE__)
 
-            erb_parsed = Sprockets::ERBProcessor.call(template_input)
-            output << "VComponents['#{name.sub(/\.tpl$/, "")}'].template = '#{j erb_parsed}';"
+            #erb_parsed = Sprockets::ERBProcessor.call(template_input)
+            output << "VComponents['#{name.sub(/\.tpl$/, "")}'].template = '#{j template[:content]}';"
           end
 
           { data: "#{warp(output.join)}", map: map }
