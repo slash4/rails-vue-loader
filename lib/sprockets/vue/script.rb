@@ -42,7 +42,10 @@ module Sprockets::Vue
           end
 
           if template
-            erb_parsed = Sprockets::ERBProcessor.call(template[:content])
+            template_input = {}
+            template_input[:data] = template[:content]
+            template_input[:environment] = input[:environment]
+            erb_parsed = Sprockets::ERBProcessor.call(template_input)
             output << "VComponents['#{name.sub(/\.tpl$/, "")}'].template = '#{j erb_parsed}';"
           end
 
