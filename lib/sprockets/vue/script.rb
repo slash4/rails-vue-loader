@@ -24,6 +24,7 @@ module Sprockets::Vue
       def call(input)
         data = input[:data]
         name = input[:name]
+        puts "Trying to precompile #{input[:name]}"
         input[:cache].fetch([cache_key, input[:source_path], data]) do
           script = SCRIPT_REGEX.match(data)
           template = TEMPLATE_REGEX.match(data)
